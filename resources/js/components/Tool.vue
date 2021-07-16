@@ -1,6 +1,6 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{__("Update Profile")}}</heading>
+        <heading class="mb-3">{{__("Update Profile12")}}</heading>
 
         <card class="overflow-hidden">
             <form @submit.prevent="saveProfile">

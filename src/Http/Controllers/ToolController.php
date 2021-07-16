@@ -7,29 +7,56 @@ use Illuminate\Support\Facades\Hash;
 
 class ToolController extends Controller
 {
-
     public function index()
     {
-        $fields = [];
-
-        foreach(config('nova-profile-tool.fields') as $field ) {
-
-          if(!is_null($field['value'])) {
-              $field['value'] = auth()->user()->{$field['value']};
-          }
-
-          $field['name'] = ucfirst(__("validation.attributes." . $field['attribute']));
-          $field['indexName'] = ucfirst(__("validation.attributes." . $field['attribute']));
-
-          $fields[] = $field;
-        }
-
-        return response()->json($fields);
+        return response()->json([
+            [
+                "component" => "text-field",
+                "prefixComponent" => true,
+                "indexName" => __("ឈ្មោះ"),
+                "name" => __("ឈ្មោះ"),
+                "attribute" => "name",
+                "value" => auth()->user()->name,
+                "panel" => null,
+                "sortable" => false,
+                "textAlign" => "left"
+            ],
+            [
+                "component" => "text-field",
+                "prefixComponent" => true,
+                "indexName" => __("សារអេឡិចត្រូនិច"),
+                "name" => __("សារអេឡិចត្រូនិច"),
+                "attribute" => "email",
+                "value" => auth()->user()->email,
+                "panel" => null,
+                "sortable" => false,
+                "textAlign" => "left"
+            ],
+            [
+                "component" => "password-field",
+                "prefixComponent" => true,
+                "indexName" => __("លេខសម្ងាត់"),
+                "name" => __("លេខសម្ងាត់"),
+                "attribute" => "password",
+                "value" => null,
+                "panel" => null,
+                "sortable" => false,
+                "textAlign" => "left"
+            ],
+            [
+                "component" => "password-field",
+                "prefixComponent" => true,
+                "indexName" => __("លេខសម្ងាត់បញ្ជាក់"),
+                "name" => __("លេខសម្ងាត់បញ្ជាក់"),
+                "attribute" => "password_confirmation",
+                "value" => null,
+                "panel" => null,
+                "sortable" => false,
+                "textAlign" => "left"
+            ]
+        ]);
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store()
     {
         $validations = config('nova-profile-tool.validations');
@@ -38,7 +65,7 @@ class ToolController extends Controller
 
         $fields = request()->only(array_keys($validations));
 
-        if(empty($fields['password'])) {
+        if (empty($fields['password'])) {
             unset($fields['password']);
         } else {
             $fields['password'] = Hash::make($fields['password']);
