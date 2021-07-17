@@ -43,7 +43,7 @@ return [
     'validations' => [
         'name' => 'required|string|min:4|alpha_num',
         'email' => 'required|email',
-        'password' => 'nullable|string|confirmed',
-        'password_confirmation' => 'nullable|string'
+        'password' => 'nullable|min:6|string|confirmed|required_with:password_confirmation|same:password_confirmation',
+        'password_confirmation' => 'nullable|min:6|string'
     ],
 ];
