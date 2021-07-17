@@ -39,9 +39,11 @@ return [
             "textAlign" => "left"
         ]
     ],
+
     'validations' => [
-        'name' => 'required|string',
+        'name' => 'required|string|min:4|alpha_num',
         'email' => 'required|email',
-        'password' => 'nullable|string|confirmed'
+        'password' => 'nullable|string|confirmed',
+        'password_confirmation' => 'nullable|string'
     ],
 ];

@@ -73,6 +73,9 @@ class ToolController extends Controller
 
         auth()->user()->update($fields);
 
-        return response()->json(__("Your profile has been updated!"));
+        return response()->json([
+            "status" => 200,
+            "msg" => "អ្នកបានធ្វើបច្ចុប្បន្នភាពprofileបានជោគជ័យ"
+        ]);
     }
 }

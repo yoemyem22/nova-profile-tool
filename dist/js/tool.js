@@ -326,12 +326,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 fields = _ref2.data;
 
 
-                                console.log(fields);
-
                                 this.fields = fields;
                                 this.loading = false;
 
-                            case 8:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }
@@ -351,7 +349,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
          * Saves the user's profile
          */
         saveProfile: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(e) {
                 var response;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
@@ -359,47 +357,60 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             case 0:
                                 _context2.prev = 0;
 
+                                e.preventDefault();
                                 this.loading = true;
-                                _context2.next = 4;
+                                _context2.next = 5;
                                 return this.createRequest();
 
-                            case 4:
+                            case 5:
                                 response = _context2.sent;
 
                                 this.loading = false;
 
-                                this.$toasted.show(this.__('Your profile has been saved!'), { type: 'success' });
+                                Nova.success(response.data.msg);
 
                                 // Reset the form by refetching the fields
                                 this.getFields();
 
                                 this.validationErrors = new __WEBPACK_IMPORTED_MODULE_1_laravel_nova__["Errors"]();
-                                _context2.next = 15;
+                                _context2.next = 17;
                                 break;
 
-                            case 11:
-                                _context2.prev = 11;
+                            case 12:
+                                _context2.prev = 12;
                                 _context2.t0 = _context2['catch'](0);
 
+                                window.scrollTo(0, 0);
                                 this.loading = false;
                                 if (_context2.t0.response.status == 422) {
                                     this.validationErrors = new __WEBPACK_IMPORTED_MODULE_1_laravel_nova__["Errors"](_context2.t0.response.data.errors);
+                                    this.handleResponseError(_context2.t0);
                                 }
 
-                            case 15:
+                            case 17:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, this, [[0, 11]]);
+                }, _callee2, this, [[0, 12]]);
             }));
 
-            function saveProfile() {
+            function saveProfile(_x) {
                 return _ref3.apply(this, arguments);
             }
 
             return saveProfile;
         }(),
+        handleResponseError: function handleResponseError(error) {
+            if (error.response.status === 422) {
+                this.validationErrors = new __WEBPACK_IMPORTED_MODULE_1_laravel_nova__["Errors"](error.response.data.errors);
+                Nova.error(this.__('There was a problem submitting the form.'));
+            } else if (error.response.status === 500) {
+                Nova.error(this.__('There was a problem submitting the form.'));
+            } else {
+                Nova.error(this.__('There was a problem submitting the form.') + ' "' + error.response.statusText + '"');
+            }
+        },
 
 
         /**
@@ -27553,20 +27564,13 @@ var render = function() {
     { attrs: { loading: _vm.loading } },
     [
       _c("heading", { staticClass: "mb-3" }, [
-        _vm._v(_vm._s(_vm.__("Update Profile12")))
+        _vm._v("ធ្វើបច្ចុប្បន្នភាព Profile")
       ]),
       _vm._v(" "),
       _c("card", { staticClass: "overflow-hidden" }, [
         _c(
           "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.saveProfile.apply(null, arguments)
-              }
-            }
-          },
+          { on: { submit: _vm.saveProfile } },
           [
             _c("validation-errors", {
               attrs: { errors: _vm.validationErrors }

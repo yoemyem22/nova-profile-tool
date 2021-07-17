@@ -1,9 +1,9 @@
 <template>
     <loading-view :loading="loading">
-        <heading class="mb-3">{{__("Update Profile12")}}</heading>
+        <heading class="mb-3">ធ្វើបច្ចុប្បន្នភាព Profile</heading>
 
         <card class="overflow-hidden">
-            <form @submit.prevent="saveProfile">
+            <form @submit="saveProfile">
                 <!-- Validation Errors -->
                 <validation-errors :errors="validationErrors"/>
 
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-    import { Errors, Minimum } from 'laravel-nova'
+    import {Errors} from 'laravel-nova'
 
     export default {
 
@@ -53,11 +53,9 @@
             async getFields() {
                 this.fields = []
 
-                const { data: fields } = await Nova.request().get(
+                const {data: fields} = await Nova.request().get(
                     '/nova-vendor/nova-profile-tool/'
                 )
-
-                console.log(fields)
 
                 this.fields = fields
                 this.loading = false
@@ -66,26 +64,42 @@
             /**
              * Saves the user's profile
              */
-            async saveProfile() {
+            async saveProfile(e) {
                 try {
+                    e.preventDefault()
                     this.loading = true
                     const response = await this.createRequest()
                     this.loading = false
 
-                    this.$toasted.show(
-                        this.__('Your profile has been saved!'),
-                        { type: 'success' }
-                    )
+                    Nova.success(response.data.msg)
 
                     // Reset the form by refetching the fields
                     this.getFields()
 
                     this.validationErrors = new Errors()
                 } catch (error) {
+                    window.scrollTo(0, 0)
                     this.loading = false
                     if (error.response.status == 422) {
                         this.validationErrors = new Errors(error.response.data.errors)
+                        this.handleResponseError(error)
                     }
+                }
+            },
+
+            handleResponseError(error) {
+                if (error.response.status === 422) {
+                    this.validationErrors = new Errors(error.response.data.errors)
+                    Nova.error(this.__('There was a problem submitting the form.'))
+                } else if (error.response.status === 500) {
+                    Nova.error(this.__('There was a problem submitting the form.'))
+                } else {
+                    Nova.error(
+                        this.__('There was a problem submitting the form.') +
+                        ' "' +
+                        error.response.statusText +
+                        '"'
+                    )
                 }
             },
 
