@@ -27605,9 +27605,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.__("Save Profile")) +
-                      "\n                "
+                    "\n                    រក្សាទុកProfile\n                "
                   )
                 ]
               )

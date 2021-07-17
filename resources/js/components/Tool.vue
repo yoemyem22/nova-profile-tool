@@ -23,7 +23,7 @@
                 <!-- Create Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button dusk="create-and-add-another-button" class="ml-auto btn btn-default btn-primary mr-3">
-                        {{__('Save Profile')}}
+                        រក្សាទុកProfile
                     </button>
                 </div>
             </form>
