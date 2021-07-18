@@ -27564,7 +27564,7 @@ var render = function() {
     { attrs: { loading: _vm.loading } },
     [
       _c("heading", { staticClass: "mb-3" }, [
-        _vm._v("ធ្វើបច្ចុប្បន្នភាព Profile")
+        _vm._v("ធ្វើបច្ចុប្បន្នភាព" + _vm._s(_vm.__("Profile")))
       ]),
       _vm._v(" "),
       _c("card", { staticClass: "overflow-hidden" }, [
@@ -27603,11 +27603,7 @@ var render = function() {
                   staticClass: "ml-auto btn btn-default btn-primary mr-3",
                   attrs: { dusk: "create-and-add-another-button" }
                 },
-                [
-                  _vm._v(
-                    "\n                    រក្សាទុកProfile\n                "
-                  )
-                ]
+                [_vm._v("\n                    រក្សាទុក\n                ")]
               )
             ])
           ],

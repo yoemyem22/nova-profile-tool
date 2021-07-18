@@ -75,7 +75,7 @@ class ToolController extends Controller
 
         return response()->json([
             "status" => 200,
-            "msg" => "អ្នកបានធ្វើបច្ចុប្បន្នភាពprofileបានជោគជ័យ"
+            "msg" => "អ្នកបានធ្វើបច្ចុប្បន្នភាព" . __('Profile') . "បានជោគជ័យ"
         ]);
     }
 }
